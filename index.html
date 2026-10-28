@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grupo Covenantia RM · Modelación financiera para concesiones de transporte</title>
+<meta name="description" content="Covenantia RM: el motor financiero para concesiones de transporte. Costo por km, tarifa requerida, DSCR, VPN, TIR y presentación para el comité.">
+<meta name="theme-color" content="#060d1d">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<meta property="og:title" content="Grupo Covenantia RM · Cada kilómetro, una decisión rentable">
+<meta property="og:description" content="El motor financiero para concesiones de transporte: costo por km, tarifa requerida, DSCR y evaluación de la inversión.">
+<link rel="canonical" href="https://www.grupocovenantia.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Grupo Covenantia RM">
+<meta property="og:locale" content="es_MX">
+<meta property="og:url" content="https://www.grupocovenantia.com/">
+<meta property="og:image" content="https://www.grupocovenantia.com/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --fondo: #060d1d; --fondo2: #0a1530; --sup: #0e1b38; --linea: rgba(217,189,134,.22); --linea2: rgba(255,255,255,.08);
+  --oro: #d9bd86; --oro2: #f1dfb8; --txt: #f4f6fb; --txt2: #c3cbda; --txt3: #8e9ab0; --ok: #5cc49a;
+  --max: 1180px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+body { background: var(--fondo); color: var(--txt); font-family: Inter, "Segoe UI", system-ui, sans-serif; font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+.cont { width: min(var(--max), 100% - 40px); margin: 0 auto; }
+.oro { background: linear-gradient(180deg, #f3e2bd 0%, #d9bd86 55%, #b8955a 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.k { font-size: 13px; font-weight: 700; letter-spacing: .28em; text-transform: uppercase; color: var(--oro); }
+h1, h2, h3 { letter-spacing: -.02em; line-height: 1.1; }
+h2 { font-size: clamp(28px, 3vw, 40px); font-weight: 800; margin: 14px 0 18px; }
+.lead { font-size: clamp(16px, 1.3vw, 18px); color: var(--txt2); max-width: 720px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 15px 26px; border-radius: 999px; font-weight: 700; font-size: 16px; transition: transform .2s, box-shadow .2s, background .2s; }
+.btn-oro { color: #0b1324; background: linear-gradient(180deg, #ecd6a6, #c9a768); box-shadow: 0 18px 40px -16px rgba(217,189,134,.7); }
+.btn-oro:hover { transform: translateY(-2px); box-shadow: 0 24px 50px -16px rgba(217,189,134,.85); }
+.btn-borde { border: 1px solid var(--linea); color: var(--txt); }
+.btn-borde:hover { border-color: var(--oro); }
+section { padding: clamp(60px, 7vw, 96px) 0; position: relative; }
+
+/* encabezado */
+header { position: sticky; top: 0; z-index: 50; background: rgba(6,13,29,.82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--linea2); }
+header .cont { display: flex; align-items: center; justify-content: space-between; height: 72px; gap: 20px; }
+.marca { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 19px; letter-spacing: -.01em; }
+.marca img { width: 40px; height: 40px; }
+.marca small { display: block; font-size: 11px; font-weight: 600; letter-spacing: .22em; color: var(--oro); text-transform: uppercase; margin-top: 2px; }
+nav { display: flex; align-items: center; gap: 28px; font-size: 15px; font-weight: 500; color: var(--txt2); }
+nav a:hover { color: var(--txt); }
+nav .btn { padding: 10px 20px; font-size: 14px; color: #0b1324; }
+nav .corto { display: none; }
+@media (max-width: 860px) { nav a:not(.btn) { display: none; } }
+@media (max-width: 560px) { .marca { font-size: 16px; gap: 10px; } .marca img { width: 34px; height: 34px; } .marca small { display: none; } nav .btn { padding: 9px 14px; font-size: 13px; white-space: nowrap; } nav .largo { display: none; } nav .corto { display: inline; } .marca span { white-space: nowrap; } header .cont { height: 64px; } }
+@media (max-width: 400px) { .marca { font-size: 14px; gap: 8px; } .marca img { width: 30px; height: 30px; } header .cont { gap: 10px; } nav .btn { padding: 8px 12px; } }
+
+/* portada */
+.portada { padding-top: clamp(64px, 9vw, 110px); overflow: hidden;
+  background: radial-gradient(1200px 700px at 70% 0%, #13244a 0%, transparent 60%), radial-gradient(900px 600px at 0% 100%, #0c1a38 0%, transparent 60%); }
+.portada h1 { font-size: clamp(34px, 4.4vw, 60px); font-weight: 800; margin: 18px 0 22px; max-width: 920px; }
+.portada .acciones { display: flex; flex-wrap: wrap; gap: 14px; margin: 34px 0 60px; }
+.marco { border-radius: 18px; overflow: hidden; border: 1px solid var(--linea); box-shadow: 0 60px 120px -40px rgba(0,0,0,.9); background: #000; }
+.portada .marco { transform: perspective(2000px) rotateX(6deg); transform-origin: 50% 0; }
+.cifras { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--linea2); border: 1px solid var(--linea2); border-radius: 16px; overflow: hidden; margin-top: 60px; }
+.cifras div { background: var(--fondo); padding: 26px 22px; }
+.cifras b { display: block; font-size: clamp(22px, 2.2vw, 28px); font-weight: 800; letter-spacing: -.02em; }
+.cifras span { font-size: 14px; color: var(--txt3); }
+@media (max-width: 760px) { .cifras { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .cifras div { padding: 20px 16px; } .cifras b { font-size: 20px; } .cifras span { font-size: 13px; } }
+
+/* problema */
+.dolores { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 44px; }
+.dolor { padding: 30px 28px; border-radius: 18px; background: var(--sup); border: 1px solid var(--linea2); }
+.dolor i { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; font-style: normal; font-weight: 800; color: #e2706f; background: rgba(226,112,111,.1); border: 1px solid rgba(226,112,111,.45); margin-bottom: 18px; }
+.dolor h3 { font-size: 19px; margin-bottom: 8px; }
+.dolor p { color: var(--txt2); font-size: 16px; }
+@media (max-width: 860px) { .dolores { grid-template-columns: 1fr; } }
+
+/* funciones */
+.funcion { display: grid; grid-template-columns: 1fr 1.35fr; gap: clamp(30px, 5vw, 70px); align-items: center; margin-top: 72px; }
+.funcion:nth-child(even) { grid-template-columns: 1.35fr 1fr; }
+.funcion:nth-child(even) .texto { order: 2; }
+.funcion .n { font-size: 13px; font-weight: 800; letter-spacing: .26em; color: var(--oro); }
+.funcion h3 { font-size: clamp(24px, 2.3vw, 30px); font-weight: 800; margin: 12px 0 14px; }
+.funcion p { color: var(--txt2); }
+.funcion ul { list-style: none; margin-top: 18px; display: grid; gap: 10px; }
+.funcion li { display: flex; gap: 12px; color: var(--txt2); font-size: 16px; }
+.funcion li::before { content: ""; flex: none; width: 18px; height: 18px; margin-top: 4px; border-radius: 50%; border: 1.5px solid var(--oro);
+  background: radial-gradient(circle, var(--oro) 0 3px, transparent 4px); }
+@media (max-width: 860px) { .funcion, .funcion:nth-child(even) { grid-template-columns: 1fr; } .funcion:nth-child(even) .texto { order: 0; } }
+
+/* video */
+.video { background: linear-gradient(180deg, var(--fondo) 0%, var(--fondo2) 50%, var(--fondo) 100%); text-align: center; }
+.video .lead { margin: 0 auto; }
+.video .marco { max-width: 960px; margin: 40px auto 0; }
+.video video { width: 100%; }
+
+/* seguridad */
+.tarjetas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 44px; }
+.tarjeta { padding: 32px 28px; border-radius: 18px; border: 1px solid var(--linea); background: linear-gradient(160deg, rgba(18,32,62,.8), rgba(8,15,32,.85)); }
+.tarjeta .ic { width: 52px; height: 52px; border-radius: 15px; display: grid; place-items: center; margin-bottom: 20px; background: rgba(217,189,134,.1); border: 1px solid rgba(217,189,134,.45); }
+.tarjeta svg { width: 26px; height: 26px; stroke: var(--oro); fill: none; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.tarjeta h3 { font-size: 19px; margin-bottom: 8px; }
+.tarjeta p { color: var(--txt2); font-size: 16px; }
+@media (max-width: 860px) { .tarjetas { grid-template-columns: 1fr; } }
+
+/* para quién */
+.quien { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--linea2); border-radius: 18px; overflow: hidden; border: 1px solid var(--linea2); margin-top: 44px; }
+.quien div { background: var(--fondo); padding: 32px 28px; }
+.quien h3 { font-size: 18px; margin-bottom: 8px; }
+.quien p { color: var(--txt2); font-size: 16px; }
+@media (max-width: 860px) { .quien { grid-template-columns: 1fr; } }
+.medida { margin-top: 30px; padding: 26px 30px; border-radius: 16px; border: 1px dashed var(--linea); display: flex; flex-wrap: wrap; gap: 14px 30px; align-items: center; justify-content: space-between; }
+.medida p { color: var(--txt2); max-width: 760px; }
+.medida b { color: var(--txt); }
+
+/* cómo trabajamos */
+.pasos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 44px; counter-reset: paso; }
+.paso { padding: 30px 28px; border-radius: 18px; background: var(--sup); border: 1px solid var(--linea2); position: relative; }
+.paso .num { font-size: 13px; font-weight: 800; letter-spacing: .26em; color: var(--oro); }
+.paso h3 { font-size: 19px; margin: 10px 0 8px; }
+.paso p { color: var(--txt2); font-size: 16px; }
+@media (max-width: 860px) { .pasos { grid-template-columns: 1fr; } }
+
+/* contacto */
+.contacto { text-align: center; background: radial-gradient(900px 500px at 50% 100%, #142650 0%, transparent 70%); }
+.contacto img.logo { width: 92px; height: 92px; margin: 0 auto 24px; filter: drop-shadow(0 0 30px rgba(217,189,134,.35)); }
+.contacto h2 { font-size: clamp(30px, 3.6vw, 46px); }
+.contacto .lead { margin: 0 auto; }
+.persona { margin: 40px auto 0; display: inline-flex; flex-direction: column; gap: 6px; padding: 28px 40px; border-radius: 20px; border: 1px solid var(--linea); background: rgba(14,27,56,.6); }
+.persona b { font-size: 20px; }
+.persona span { color: var(--txt2); }
+.persona span a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--linea); }
+.persona span a:hover { color: var(--txt); }
+.persona .acciones { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 18px; }
+footer { border-top: 1px solid var(--linea2); padding: 30px 0; color: var(--txt3); font-size: 14px; }
+footer a { border-bottom: 1px solid var(--linea2); }
+footer a:hover { color: var(--txt); }
+footer .cont { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+.nota-demo { font-size: 13px; color: var(--txt3); margin-top: 12px; }
+
+/* aparición suave al bajar */
+.aparece { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s ease; }
+.aparece.visto { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .aparece { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="cont">
+    <a class="marca" href="#inicio"><img src="logo.svg" alt=""><span>Grupo Covenantia RM<small>Modelos financieros</small></span></a>
+    <nav>
+      <a href="#producto">Covenantia RM</a>
+      <a href="#video">Video</a>
+      <a href="#quienes-somos">Quiénes somos</a>
+      <a href="#contacto">Contacto</a>
+      <a class="btn btn-oro" href="#contacto" data-wa><span class="largo">Solicita una demostración</span><span class="corto">Demostración</span></a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="portada" id="inicio">
+    <div class="cont">
+      <div class="k aparece">Concesiones de transporte</div>
+      <h1 class="aparece">Cada kilómetro,<br><span class="oro">una decisión rentable.</span></h1>
+      <p class="lead aparece">Covenantia RM es el motor financiero para concesiones de transporte: costo por kilómetro, tarifa requerida, cobertura de la deuda y rentabilidad de cada escenario, listos para el banco y el comité.</p>
+      <div class="acciones aparece">
+        <a class="btn btn-oro" href="#contacto" data-wa>Solicita una demostración →</a>
+        <a class="btn btn-borde" href="#video">Ver el video (1 min)</a>
+      </div>
+      <div class="marco aparece"><img src="img/graficas.jpg" alt="Gráficas de Covenantia RM: resultado neto por escenario en el tiempo" loading="eager"></div>
+      <p class="nota-demo">Pantallas reales de Covenantia RM con un modelo de demostración (cifras ficticias).</p>
+      <div class="cifras aparece">
+        <div><b class="oro">9 pasos</b><span>guiados para armar el costo por km</span></div>
+        <div><b class="oro">DSCR</b><span>año por año contra el covenant</span></div>
+        <div><b class="oro">VPN · TIR</b><span>con veredicto y recomendaciones</span></div>
+        <div><b class="oro">AES-256</b><span>tus cifras, cifradas en tu equipo</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="problema">
+    <div class="cont">
+      <div class="k aparece">El problema</div>
+      <h2 class="aparece">Las decisiones grandes no se toman <span class="oro">a ciegas.</span></h2>
+      <div class="dolores">
+        <div class="dolor aparece"><i>×</i><h3>Tarifas negociadas sin sustento</h3><p>Sin un costo por km confiable, cada negociación con la autoridad o el cliente se gana o se pierde por intuición.</p></div>
+        <div class="dolor aparece"><i>×</i><h3>Hojas de cálculo frágiles</h3><p>Versiones que nadie audita, fórmulas rotas y supuestos escondidos que salen a la luz en el peor momento.</p></div>
+        <div class="dolor aparece"><i>×</i><h3>El banco pregunta por el DSCR</h3><p>Y la respuesta tarda días. Un covenant incumplido se descubre cuando ya es tarde para renegociar.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="producto" style="padding-top:0">
+    <div class="cont">
+      <div class="k aparece">Covenantia RM</div>
+      <h2 class="aparece">Del supuesto a la decisión, <span class="oro">en un solo modelo.</span></h2>
+      <p class="lead aparece">Una sola fuente para cada cifra: lo que capturas en los supuestos se convierte, sin hojas intermedias, en costo, tarifa, cobertura y rentabilidad.</p>
+      <div>
+        <div class="funcion aparece">
+          <div class="texto"><div class="n">01 · COSTO POR KM</div><h3>Construye el costo por kilómetro.</h3><p>Nueve pasos guiados, del parque vehicular a los gastos de la unidad de negocio, con el costo de cada tipo de flota concepto por concepto.</p>
+            <ul><li>Energéticos, mantenimiento, personal y financiamiento</li><li>Varias flotas y escenarios lado a lado</li><li>Avance de captura y avisos de lo que falta</li></ul></div>
+          <div class="marco"><img src="img/costokm.jpg" alt="Costo por km por tipo de flota" loading="lazy"></div>
+        </div>
+        <div class="funcion aparece">
+          <div class="texto"><div class="n">02 · TARIFA Y COBERTURA</div><h3>Tarifa requerida y DSCR con semáforo.</h3><p>Compara lo que te pagan contra la tarifa que necesitas y mide la cobertura de la deuda año por año contra el covenant del banco.</p>
+            <ul><li>Resultado mensual y anual, con impuestos y PTU</li><li>Semáforo contra el mínimo y el objetivo del covenant</li><li>Puente entre escenarios para explicar cada diferencia</li></ul></div>
+          <div class="marco"><img src="img/resultados.jpg" alt="Tarifa requerida y DSCR por escenario" loading="lazy"></div>
+        </div>
+        <div class="funcion aparece">
+          <div class="texto"><div class="n">03 · EVALUACIÓN</div><h3>¿Conviene entrar? <span class="oro">Te lo dice claro.</span></h3><p>VPN, TIR, WACC y recuperación del capital, con un veredicto por escenario y recomendaciones concretas.</p>
+            <ul><li>Flujo del accionista y del proyecto</li><li>Punto de equilibrio en km y holgura</li><li>Recomendaciones con cifras, no con adjetivos</li></ul></div>
+          <div class="marco"><img src="img/evaluacion.jpg" alt="Evaluación de la inversión con veredicto" loading="lazy"></div>
+        </div>
+        <div class="funcion aparece">
+          <div class="texto"><div class="n">04 · SENSIBILIDAD Y ESTRÉS</div><h3>Estrésalo antes que el banco.</h3><p>Qué supuesto mueve más tu resultado y con qué cambio se rompe el covenant, en segundos.</p>
+            <ul><li>Tornado de sensibilidad por supuesto</li><li>Punto de quiebre del covenant</li><li>Estrés combinado tipo comité de crédito</li></ul></div>
+          <div class="marco"><img src="img/sensibilidad.jpg" alt="Sensibilidad y estrés" loading="lazy"></div>
+        </div>
+        <div class="funcion aparece">
+          <div class="texto"><div class="n">05 · LISTO PARA EL COMITÉ</div><h3>Una presentación ejecutiva, en un clic.</h3><p>El informe completo para el comité de crédito o de inversión: conclusión, escenarios, costo por km, proyección y finanzas, listo para imprimir.</p>
+            <ul><li>Paquete para comité en PDF</li><li>Gráficas de la proyección por escenario</li><li>Exportación a Excel para auditoría</li></ul></div>
+          <div class="marco"><img src="img/presentacion.jpg" alt="Presentación ejecutiva para el comité" loading="lazy"></div>
+        </div>
+      </div>
+      <p class="nota-demo" style="margin-top:30px">Todas las pantallas muestran un modelo de demostración con cifras ficticias.</p>
+    </div>
+  </section>
+
+  <section class="video" id="video">
+    <div class="cont">
+      <div class="k aparece">En un minuto</div>
+      <h2 class="aparece">Míralo en acción.</h2>
+      <p class="lead aparece">Un recorrido por el modelo: del costo por km a la presentación para el comité.</p>
+      <div class="marco aparece"><video src="comercial.mp4" poster="img/portada-video.jpg" controls preload="none" playsinline></video></div>
+    </div>
+  </section>
+
+  <section id="seguridad">
+    <div class="cont">
+      <div class="k aparece">Seguridad</div>
+      <h2 class="aparece">Tus cifras, <span class="oro">solo tuyas.</span></h2>
+      <div class="tarjetas">
+        <div class="tarjeta aparece"><div class="ic"><svg viewBox="0 0 24 24"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></div><h3>Cifrado AES-256</h3><p>Los modelos se cifran en tu equipo con tu contraseña. Sin ella, nadie los abre.</p></div>
+        <div class="tarjeta aparece"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 19.5c.6-3.3 3-5 6-5s5.4 1.7 6 5"/><circle cx="17.5" cy="9" r="2.4"/><path d="M16 14.6c2.6.1 4.3 1.6 4.9 4.4"/></svg></div><h3>Usuarios y licencias</h3><p>Administrador, edición y solo consulta, con licencia por empresa y vigencia controlada.</p></div>
+        <div class="tarjeta aparece"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></div><h3>Sin servidores</h3><p>Funciona en tu computadora: tu información financiera no pasa por la nube de nadie.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="para-quien" style="padding-top:0">
+    <div class="cont">
+      <div class="k aparece">Para quién</div>
+      <h2 class="aparece">Hecho para quien firma la decisión.</h2>
+      <div class="quien aparece">
+        <div><h3>Dueños y directores generales</h3><p>Saber si una concesión conviene, con qué tarifa y bajo qué condiciones, antes de comprometerse.</p></div>
+        <div><h3>Directores de finanzas</h3><p>Un modelo auditable, con una sola fuente por cifra, que responde al banco en minutos y no en días.</p></div>
+        <div><h3>Comités de crédito e inversión</h3><p>Escenarios comparables, cobertura de la deuda y estrés, presentados con claridad ejecutiva.</p></div>
+      </div>
+      <div class="medida aparece">
+        <p><b>¿Tu proyecto no es de transporte?</b> También lo modelamos. Hacemos a la medida el modelo financiero de proyectos de inversión, infraestructura o nuevos negocios, con el mismo rigor que Covenantia RM.</p>
+        <a class="btn btn-borde" href="#contacto">Cuéntanos tu proyecto →</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="quienes-somos">
+    <div class="cont">
+      <div class="k aparece">Quiénes somos</div>
+      <h2 class="aparece">Hecho desde la dirección de finanzas, <span class="oro">para quien decide.</span></h2>
+      <p class="lead aparece">Detrás de Covenantia RM hay más de 13 años en dirección de finanzas, planeación financiera, contraloría y auditoría, en firmas internacionales y grupos empresariales. El modelo nace de esa práctica: lo que un comité de crédito pregunta, Covenantia RM ya lo responde.</p>
+      <div class="cifras aparece">
+        <div><b class="oro">13+ años</b><span>en finanzas corporativas, contraloría y auditoría</span></div>
+        <div><b class="oro">Auditoría</b><span>formación en firmas internacionales</span></div>
+        <div><b class="oro">Consejo</b><span>y comités: información para decidir</span></div>
+        <div><b class="oro">Concesiones</b><span>especialización en su valuación</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="como-trabajamos" style="padding-top:0">
+    <div class="cont">
+      <div class="k aparece">Cómo trabajamos</div>
+      <h2 class="aparece">De la primera llamada <span class="oro">a tu propio modelo.</span></h2>
+      <div class="pasos">
+        <div class="paso aparece"><div class="num">01</div><h3>Demostración de 30 minutos</h3><p>Te mostramos Covenantia RM con un caso como el tuyo, en línea o en tus oficinas.</p></div>
+        <div class="paso aparece"><div class="num">02</div><h3>Piloto con tus cifras</h3><p>Capturamos contigo una concesión real o un proyecto en evaluación: ves tu costo por km, tu tarifa requerida y tu cobertura de deuda con tus propios números.</p></div>
+        <div class="paso aparece"><div class="num">03</div><h3>Licencia para tu empresa</h3><p>Licencia por empresa con usuarios para tu equipo (administrador, edición y solo consulta) y la vigencia que acordemos.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contacto" id="contacto">
+    <div class="cont">
+      <img class="logo aparece" src="logo.svg" alt="Grupo Covenantia RM">
+      <div class="k aparece">Contacto</div>
+      <h2 class="aparece">Solicita una <span class="oro">demostración.</span></h2>
+      <p class="lead aparece">Te mostramos Covenantia RM con un caso como el tuyo, en 30 minutos.</p>
+      <div class="persona aparece">
+        <b>Grupo Covenantia RM</b>
+        <span>Modelos financieros</span>
+        <span><a href="mailto:contacto@grupocovenantia.com">contacto@grupocovenantia.com</a></span>
+        <div class="acciones">
+          <a class="btn btn-oro" href="#contacto" data-wa>Escribir por WhatsApp</a>
+          <a class="btn btn-borde" href="mailto:contacto@grupocovenantia.com?subject=Demostraci%C3%B3n%20de%20Covenantia%20RM">Escribir correo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="cont"><span>© 2026 Grupo Covenantia RM. Todos los derechos reservados.</span><span><a href="aviso-de-privacidad.html">Aviso de privacidad</a> · Covenantia RM · Cada kilómetro, una decisión rentable.</span></div>
+</footer>
+
+<script>
+// Aparición suave de cada bloque al llegar a él (sin JavaScript, todo queda visible).
+(function () {
+  var els = document.querySelectorAll(".aparece");
+  if (!("IntersectionObserver" in window)) { els.forEach(function (e) { e.classList.add("visto"); }); return; }
+  var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("visto"); io.unobserve(e.target); } }); }, { rootMargin: "0px 0px -8% 0px" });
+  els.forEach(function (e) { io.observe(e); });
+})();
+</script>
+<script>
+// Botones de WhatsApp: el número no aparece escrito en la página; se arma al hacer clic.
+(function () {
+  var n = "011650815525".split("").reverse().join("");
+  var t = encodeURIComponent("Hola, me interesa una demostración de Covenantia RM.");
+  document.querySelectorAll("[data-wa]").forEach(function (a) {
+    a.addEventListener("click", function (e) { e.preventDefault(); window.open("https://wa.me/" + n + "?text=" + t, "_blank", "noopener"); });
+  });
+})();
+</script>
+</body>
+</html>
