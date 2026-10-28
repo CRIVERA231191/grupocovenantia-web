@@ -143,6 +143,15 @@ footer a:hover { color: var(--txt); }
 footer .cont { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
 .nota-demo { font-size: 13px; color: var(--txt3); margin-top: 12px; }
 
+/* botón para subir */
+.subir { position: fixed; right: 22px; bottom: 22px; z-index: 40; width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center;
+  background: rgba(14,27,56,.9); border: 1px solid var(--linea); color: var(--oro); box-shadow: 0 14px 30px -12px rgba(0,0,0,.8);
+  opacity: 0; transform: translateY(12px); pointer-events: none; transition: opacity .3s, transform .3s, border-color .2s; }
+.subir.ver { opacity: 1; transform: none; pointer-events: auto; }
+.subir:hover { border-color: var(--oro); }
+.subir svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+@media (max-width: 560px) { .subir { right: 16px; bottom: 16px; width: 42px; height: 42px; } }
+
 /* aparición suave al bajar */
 .aparece { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s ease; }
 .aparece.visto { opacity: 1; transform: none; }
@@ -314,6 +323,8 @@ footer .cont { display: flex; flex-wrap: wrap; justify-content: space-between; g
   </section>
 </main>
 
+<a class="subir" href="#inicio" aria-label="Subir al inicio" title="Subir al inicio"><svg viewBox="0 0 24 24"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"/></svg></a>
+
 <footer>
   <div class="cont"><span>© 2026 Grupo Covenantia RM. Todos los derechos reservados.</span><span><a href="aviso-de-privacidad.html">Aviso de privacidad</a> · Covenantia RM · Cada kilómetro, una decisión rentable.</span></div>
 </footer>
@@ -325,6 +336,14 @@ footer .cont { display: flex; flex-wrap: wrap; justify-content: space-between; g
   if (!("IntersectionObserver" in window)) { els.forEach(function (e) { e.classList.add("visto"); }); return; }
   var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("visto"); io.unobserve(e.target); } }); }, { rootMargin: "0px 0px -8% 0px" });
   els.forEach(function (e) { io.observe(e); });
+})();
+</script>
+<script>
+// El botón para subir aparece después de la portada.
+(function () {
+  var b = document.querySelector(".subir");
+  function ver() { b.classList.toggle("ver", window.scrollY > window.innerHeight * 0.8); }
+  window.addEventListener("scroll", ver, { passive: true }); ver();
 })();
 </script>
 <script>
