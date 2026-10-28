@@ -91,7 +91,35 @@ nav .corto { display: none; }
 .gv-lienzo svg { display: block; width: 100%; height: clamp(250px, 32vw, 380px); overflow: visible; touch-action: pan-y; }
 .gv-eje { font-size: 12px; fill: var(--txt3); font-variant-numeric: tabular-nums; }
 .gv-reja { stroke: rgba(255,255,255,.07); }
-.gv-linea { fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.gv-linea { fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; animation: gvDibuja 1.5s cubic-bezier(.3,.7,.2,1) forwards;
+  filter: drop-shadow(0 0 3px var(--c)) drop-shadow(0 0 8px color-mix(in srgb, var(--c) 45%, transparent)); }
+@keyframes gvDibuja { to { stroke-dashoffset: 0; } }
+.gv-halo { fill: none; stroke-width: 10; stroke-linecap: round; opacity: .14; filter: blur(4px); }
+.gv-area { opacity: 0; animation: gvAparece .9s ease-out .7s forwards; }
+.gv-nodos { opacity: 0; animation: gvAparece .6s ease-out 1.2s forwards; }
+.gv-nodos circle { filter: drop-shadow(0 0 3px var(--c)); animation: gvTitila 3.2s ease-in-out infinite; }
+@keyframes gvAparece { to { opacity: 1; } }
+@keyframes gvTitila { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+.gv-pulso { fill: none; stroke: #fff; stroke-width: 2.6; stroke-linecap: round; stroke-dasharray: .045 .955; stroke-dashoffset: 1; opacity: 0;
+  filter: drop-shadow(0 0 4px var(--c)) drop-shadow(0 0 10px var(--c)); animation: gvPulso 5s linear infinite; }
+@keyframes gvPulso { 0% { stroke-dashoffset: 1; opacity: 0; } 8% { opacity: .9; } 85% { opacity: .9; } 100% { stroke-dashoffset: .05; opacity: 0; } }
+.gv-piso { stroke: rgba(143,155,255,.14); stroke-width: 1; }
+.gv-haz { mix-blend-mode: screen; animation: gvHaz 6s ease-in-out 1.6s infinite; opacity: 0; }
+@keyframes gvHaz { 0% { transform: translateX(0); opacity: 0; } 10% { opacity: 1; } 80% { opacity: 1; } 100% { transform: translateX(var(--haz-d)); opacity: 0; } }
+.gv-fin { transform-box: fill-box; transform-origin: center; filter: drop-shadow(0 0 6px var(--c)); animation: gvLate 1.8s ease-in-out infinite; }
+@keyframes gvLate { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.3); } }
+.gv-valor { font-size: 13px; font-weight: 750; font-variant-numeric: tabular-nums; opacity: 0; animation: gvAparece .6s ease-out 1.3s forwards; }
+.gv-max .h { fill: rgba(255,207,77,.22); stroke: #ffcf4d; stroke-width: 1; transform-box: fill-box; transform-origin: center; animation: gvFoco 1.8s ease-out infinite; }
+.gv-max .anillo { fill: none; stroke: #ffcf4d; stroke-width: 1.6; stroke-dasharray: .62 .38; transform-box: fill-box; transform-origin: center; filter: drop-shadow(0 0 4px #ffcf4d); animation: gvGira 7s linear infinite; }
+.gv-max .mira { fill: none; stroke: #ffcf4d; stroke-width: 1.4; stroke-linecap: round; }
+.gv-max .c { fill: #ffcf4d; stroke: #fff; stroke-width: 1.4; filter: drop-shadow(0 0 6px #ffcf4d); }
+.gv-max text { font-size: 12px; font-weight: 800; fill: #ffcf4d; paint-order: stroke; stroke: #0b1530; stroke-width: 3px; }
+.gv-max { opacity: 0; animation: gvAparece .6s ease-out 1.4s forwards; }
+@keyframes gvFoco { 0% { transform: scale(.6); opacity: 1; } 100% { transform: scale(1.9); opacity: 0; } }
+@keyframes gvGira { to { transform: rotate(360deg); } }
+.gv-cruz { stroke: #8f9bff; stroke-dasharray: 3 3; filter: drop-shadow(0 0 4px #8f9bff); }
+.sin-anim :is(.gv-linea, .gv-area, .gv-nodos, .gv-valor, .gv-max) { animation: none; opacity: 1; stroke-dashoffset: 0; }
+@media (prefers-reduced-motion: reduce) { .gv-lienzo :is(.gv-linea, .gv-area, .gv-nodos, .gv-nodos circle, .gv-valor, .gv-max, .gv-max .h, .gv-max .anillo, .gv-fin, .gv-haz) { animation: none; opacity: 1; stroke-dashoffset: 0; } .gv-pulso, .gv-haz { display: none; } }
 .gv-tip { position: absolute; top: 0; pointer-events: none; min-width: 180px; padding: 12px 14px; border-radius: 12px; background: rgba(6,13,29,.95); border: 1px solid var(--linea); box-shadow: 0 20px 40px -16px rgba(0,0,0,.9); font-size: 14px; }
 .gv-tip .a { font-weight: 800; margin-bottom: 6px; }
 .gv-tip .f { display: flex; align-items: center; gap: 8px; justify-content: space-between; color: var(--txt2); }
@@ -426,8 +454,8 @@ footer .cont { display: flex; flex-wrap: wrap; justify-content: space-between; g
     document.getElementById("gvTit").textContent = c[2];
     [].forEach.call(tabs.children, function (b) { b.setAttribute("aria-selected", b.dataset.k === actual ? "true" : "false"); });
     [].forEach.call(ley.children, function (b) { b.setAttribute("aria-pressed", prendido[b.dataset.e] ? "true" : "false"); b.querySelector("b").textContent = mf(suma(D[actual][b.dataset.e])); b.title = "Total 2027–2036"; });
-    var W = lienzo.clientWidth, H = svg.clientHeight, izq = W < 500 ? 46 : 60, der = W < 500 ? 12 : 24, arr = 14, abj = 30;
-    svg.setAttribute("viewBox", "0 0 " + W + " " + H); svg.innerHTML = "";
+    var W = lienzo.clientWidth, H = svg.clientHeight, izq = W < 500 ? 46 : 60, der = W < 500 ? 22 : 92, arr = 34, abj = 30;
+    svg.setAttribute("viewBox", "0 0 " + W + " " + H); svg.innerHTML = ""; svg.classList.toggle("sin-anim", !animar);
     var vis = ESC.filter(function (e) { return prendido[e[0]]; });
     var max = Math.max.apply(null, vis.map(function (e) { return Math.max.apply(null, D[actual][e[0]]); }));
     var pz = paso(max), tope = Math.ceil(max / pz) * pz;
@@ -438,25 +466,40 @@ footer .cont { display: flex; flex-wrap: wrap; justify-content: space-between; g
       el("text", { x: izq - 10, y: y(v) + 4, "text-anchor": "end", "class": "gv-eje" }, svg).textContent = "$" + Math.round(v) + "M";
     }
     ANIOS.forEach(function (a, i) { if (W < 500 && i % 2) return; el("text", { x: x(i), y: H - 8, "text-anchor": "middle", "class": "gv-eje" }, svg).textContent = a; });
+    // Piso en perspectiva y haz de luz que barre
+    var iw = W - izq - der, ih = H - arr - abj, piso = el("g", { "class": "gv-piso" }, svg);
+    for (var k = 0; k <= 12; k++) { var xb = izq + k / 12 * iw, xt = izq + iw / 2 + (xb - izq - iw / 2) * .35; el("line", { x1: xt, y1: arr + ih * .55, x2: xb, y2: arr + ih }, piso); }
+    [.62, .72, .84].forEach(function (f) { el("line", { x1: izq, x2: izq + iw, y1: arr + ih * f, y2: arr + ih * f }, piso); });
+    var gh = el("linearGradient", { id: "gvHazG", x1: 0, x2: 1 }, defs);
+    [[0, 0], [.5, .1], [1, 0]].forEach(function (st) { el("stop", { offset: st[0], "stop-color": "#fff", "stop-opacity": st[1] }, gh); });
+    var hw = Math.max(40, iw * .08); el("rect", { "class": "gv-haz", x: izq, y: arr, width: hw, height: ih, fill: "url(#gvHazG)", style: "--haz-d:" + (iw - hw) + "px" }, svg);
+    var cruz = el("line", { y1: arr, y2: H - abj, "class": "gv-cruz", visibility: "hidden" }, svg);
+    // Líneas: halo, trazo que se dibuja, pulso de luz que la recorre y nodos que titilan
     vis.slice().reverse().forEach(function (e, k) {
-      var pts = D[actual][e[0]].map(function (v, i) { return [x(i), y(v)]; }), d = curva(pts);
-      var gid = "gvG" + k; var g = el("linearGradient", { id: gid, x1: 0, y1: 0, x2: 0, y2: 1 }, defs);
-      el("stop", { offset: "0", "stop-color": e[1], "stop-opacity": vis.length === 1 || e === vis[0] ? ".28" : ".10" }, g); el("stop", { offset: "1", "stop-color": e[1], "stop-opacity": "0" }, g);
-      var area = el("path", { d: d + " L" + x(ANIOS.length - 1) + "," + y(0) + " L" + x(0) + "," + y(0) + " Z", fill: "url(#" + gid + ")" }, svg);
-      var ln = el("path", { d: d, "class": "gv-linea", stroke: e[1], style: "filter: drop-shadow(0 0 6px " + e[1] + "66)" }, svg);
-      if (animar && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        var L = ln.getTotalLength(); ln.style.strokeDasharray = L; ln.style.strokeDashoffset = L; area.style.opacity = 0;
-        ln.getBoundingClientRect(); ln.style.transition = "stroke-dashoffset 1.4s cubic-bezier(.3,.7,.2,1)"; area.style.transition = "opacity 1s ease .6s";
-        requestAnimationFrame(function () { ln.style.strokeDashoffset = 0; area.style.opacity = 1; });
-      }
+      var pts = D[actual][e[0]].map(function (v, i) { return [x(i), y(v)]; }), d = curva(pts), c = "--c:" + e[1];
+      var gid = "gvG" + k, g = el("linearGradient", { id: gid, x1: 0, y1: 0, x2: 0, y2: 1 }, defs);
+      el("stop", { offset: "0", "stop-color": e[1], "stop-opacity": e === vis[0] ? ".26" : ".08" }, g); el("stop", { offset: "1", "stop-color": e[1], "stop-opacity": "0" }, g);
+      el("path", { d: d + " L" + x(ANIOS.length - 1) + "," + y(0) + " L" + x(0) + "," + y(0) + " Z", fill: "url(#" + gid + ")", "class": "gv-area" }, svg);
+      el("path", { d: d, "class": "gv-halo", stroke: e[1] }, svg);
+      el("path", { d: d, "class": "gv-linea", stroke: e[1], pathLength: 1, style: c }, svg);
+      el("path", { d: d, "class": "gv-pulso", pathLength: 1, style: c + ";animation-delay:" + (1.6 + k * .7).toFixed(1) + "s" }, svg);
+      var nod = el("g", { "class": "gv-nodos", fill: e[1], style: c }, svg);
+      pts.forEach(function (p, i) { el("circle", { cx: p[0], cy: p[1], r: 2.2, style: "animation-delay:" + (i * .23).toFixed(2) + "s" }, nod); });
+      var u = pts[pts.length - 1]; el("circle", { cx: u[0], cy: u[1], r: 3.4, fill: e[1], "class": "gv-fin", style: c }, svg);
     });
-    // Máximo del escenario más alto
-    var top = vis[0], serie = D[actual][top[0]], im = serie.indexOf(Math.max.apply(null, serie));
-    el("circle", { cx: x(im), cy: y(serie[im]), r: 9, fill: "none", stroke: top[1], "stroke-opacity": ".45" }, svg);
-    el("circle", { cx: x(im), cy: y(serie[im]), r: 4.5, fill: top[1] }, svg);
-    var et = el("text", { x: x(im), y: y(serie[im]) - 16, "text-anchor": im > 7 ? "end" : "middle", "class": "gv-eje", style: "fill:#f3e2bd;font-weight:700" }, svg); et.textContent = "Máximo " + ANIOS[im] + " · " + mf(serie[im]);
+    // Valor al final de cada línea, sin encimarse
+    var finales = vis.map(function (e) { var a = D[actual][e[0]]; return { e: e, v: a[a.length - 1], y: y(a[a.length - 1]) }; }).sort(function (a, b) { return a.y - b.y; });
+    for (var f = 1; f < finales.length; f++) if (finales[f].y - finales[f - 1].y < 16) finales[f].y = finales[f - 1].y + 16;
+    if (W >= 500) finales.forEach(function (o) { el("text", { x: x(ANIOS.length - 1) + 22, y: o.y + 4, fill: o.e[1], "class": "gv-valor" }, svg).textContent = mf(o.v); });
+    // Máximo del escenario más alto: mira con anillo que gira
+    var top = vis[0], serie = D[actual][top[0]], im = serie.indexOf(Math.max.apply(null, serie)), mx = x(im), my = y(serie[im]);
+    var gm = el("g", { "class": "gv-max" }, svg);
+    el("circle", { "class": "h", cx: mx, cy: my, r: 11 }, gm); el("circle", { "class": "anillo", cx: mx, cy: my, r: 13, pathLength: 8 }, gm);
+    el("path", { "class": "mira", d: "M" + mx + " " + (my - 19) + "v5M" + mx + " " + (my + 14) + "v5M" + (mx - 19) + " " + my + "h5M" + (mx + 14) + " " + my + "h5" }, gm);
+    el("circle", { "class": "c", cx: mx, cy: my, r: 4 }, gm);
+    el("text", { x: mx, y: my - 24, "text-anchor": im > 7 ? "end" : "middle" }, gm).textContent = "Máximo " + ANIOS[im] + " · " + mf(serie[im]);
     // Guía al pasar el cursor
-    var guia = el("line", { y1: arr, y2: H - abj, stroke: "rgba(243,226,189,.5)", "stroke-dasharray": "3 4", visibility: "hidden" }, svg);
+    var guia = cruz;
     var puntos = vis.map(function (e) { return el("circle", { r: 5, fill: "#060d1d", stroke: e[1], "stroke-width": 2.5, visibility: "hidden" }, svg); });
     geo = { x: x, y: y, vis: vis, guia: guia, puntos: puntos, izq: izq, der: der, W: W };
     tip.hidden = true; animar = false;
