@@ -66,7 +66,7 @@ nav .corto { display: none; }
 .marco { border-radius: 18px; overflow: hidden; border: 1px solid var(--linea); box-shadow: 0 60px 120px -40px rgba(0,0,0,.9); background: #000; }
 .cifras { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--linea2); border: 1px solid var(--linea2); border-radius: 16px; overflow: hidden; margin-top: 60px; }
 .cifras div { background: var(--fondo); padding: 26px 22px; }
-.cifras b { display: block; font-size: clamp(22px, 2.2vw, 28px); font-weight: 800; letter-spacing: -.02em; }
+.cifras b { display: block; font-size: clamp(22px, 2.2vw, 28px); font-weight: 800; letter-spacing: -.02em; line-height: 1.2; margin-bottom: 6px; }
 .cifras span { font-size: 14px; color: var(--txt3); }
 @media (max-width: 760px) { .cifras { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 480px) { .cifras div { padding: 20px 16px; } .cifras b { font-size: 20px; } .cifras span { font-size: 13px; } }
@@ -166,6 +166,17 @@ nav .corto { display: none; }
 .funcion li::before { content: ""; flex: none; width: 18px; height: 18px; margin-top: 4px; border-radius: 50%; border: 1.5px solid var(--oro);
   background: radial-gradient(circle, var(--oro) 0 3px, transparent 4px); }
 @media (max-width: 860px) { .funcion, .funcion:nth-child(even) { grid-template-columns: 1fr; } .funcion:nth-child(even) .texto { order: 0; } }
+
+/* capturas que se abren en grande */
+.ampliable { position: relative; }
+.ampliar { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
+.ampliar .lupa { position: absolute; right: 12px; bottom: 12px; padding: 7px 12px; border-radius: 999px; font-size: 13px; font-weight: 600; color: var(--txt);
+  background: rgba(6,13,29,.82); border: 1px solid var(--linea); opacity: .85; transition: opacity .2s, border-color .2s; }
+.ampliar:hover .lupa, .ampliar:focus-visible .lupa { opacity: 1; border-color: var(--oro); }
+.visor { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 3vh 2vw; background: rgba(3,7,16,.92); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); cursor: zoom-out; }
+.visor[hidden] { display: none; }
+.visor img { max-width: 100%; max-height: 100%; border-radius: 12px; border: 1px solid var(--linea); box-shadow: 0 40px 100px -30px #000; }
+.visor .cerrar { position: absolute; top: 16px; right: 18px; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--linea); background: rgba(14,27,56,.9); color: var(--txt); font-size: 22px; cursor: pointer; }
 
 /* video */
 .video { background: linear-gradient(180deg, var(--fondo) 0%, var(--fondo2) 50%, var(--fondo) 100%); text-align: center; }
@@ -272,10 +283,10 @@ footer .cont { display: flex; flex-wrap: wrap; justify-content: space-between; g
           </div>
         </div>
       </div>
-      <p class="nota-demo">Pantalla real de Covenantia RM con el modelo de demostración (cifras ficticias). La gráfica es interactiva: pasa el cursor o toca para ver cada año, cambia de pestaña y prende o apaga escenarios.</p>
+      <p class="nota-demo">Pantalla real de Covenantia RM con cifras ficticias. Pasa el cursor sobre la gráfica o cambia de pestaña.</p>
       <div class="cifras aparece">
-        <div><b class="oro">9 pasos</b><span>guiados para armar el costo por km</span></div>
-        <div><b class="oro">DSCR</b><span>año por año contra el covenant</span></div>
+        <div><b class="oro">Costo por km</b><span>y tarifa requerida, frente a lo que te pagan</span></div>
+        <div><b class="oro">DSCR</b><span>cobertura de la deuda, año por año</span></div>
         <div><b class="oro">VPN · TIR</b><span>con veredicto y recomendaciones</span></div>
         <div><b class="oro">AES-256</b><span>tus cifras, cifradas en tu equipo</span></div>
       </div>
@@ -289,7 +300,7 @@ footer .cont { display: flex; flex-wrap: wrap; justify-content: space-between; g
       <div class="dolores">
         <div class="dolor aparece"><i>×</i><h3>Tarifas negociadas sin sustento</h3><p>Sin un costo por km confiable, cada negociación con la autoridad o el cliente se gana o se pierde por intuición.</p></div>
         <div class="dolor aparece"><i>×</i><h3>Hojas de cálculo frágiles</h3><p>Versiones que nadie audita, fórmulas rotas y supuestos escondidos que salen a la luz en el peor momento.</p></div>
-        <div class="dolor aparece"><i>×</i><h3>El banco pregunta por el DSCR</h3><p>Y la respuesta tarda días. Un covenant incumplido se descubre cuando ya es tarde para renegociar.</p></div>
+        <div class="dolor aparece"><i>×</i><h3>El banco pregunta por el DSCR</h3><p>Y la cobertura de la deuda tarda días en calcularse. Un covenant (la condición del crédito) incumplido se descubre cuando ya es tarde para renegociar.</p></div>
       </div>
     </div>
   </section>
@@ -301,29 +312,29 @@ footer .cont { display: flex; flex-wrap: wrap; justify-content: space-between; g
       <p class="lead aparece">Capturas tus datos una sola vez y el modelo calcula todo lo demás: costo por km, tarifa, cobertura de la deuda y rentabilidad. Sin copiar cifras entre hojas de Excel ni versiones que no cuadran.</p>
       <div>
         <div class="funcion aparece">
-          <div class="texto"><div class="n">01 · COSTO POR KM</div><h3>Construye el costo por kilómetro.</h3><p>Nueve pasos guiados, del parque vehicular a los gastos de la unidad de negocio, con el costo de cada tipo de flota concepto por concepto.</p>
+          <div class="texto"><div class="n">01 · COSTO POR KM</div><h3>Construye el costo por kilómetro.</h3><p>Nueve pasos guiados, de la flota a la proyección anual, con el costo de cada tipo de flota concepto por concepto.</p>
             <ul><li>Energéticos, mantenimiento, personal y financiamiento</li><li>Varias flotas y escenarios lado a lado</li><li>Avance de captura y avisos de lo que falta</li></ul></div>
-          <div class="marco"><img src="img/costokm.jpg" alt="Costo por km por tipo de flota" loading="lazy"></div>
+          <div class="marco ampliable"><button type="button" class="ampliar" data-grande="img/costokm-grande.jpg" aria-label="Ver en grande"><img src="img/costokm.jpg" alt="Costo por km por tipo de flota" loading="lazy"><span class="lupa">Ver en grande</span></button></div>
         </div>
         <div class="funcion aparece">
           <div class="texto"><div class="n">02 · TARIFA Y COBERTURA</div><h3>Tarifa requerida y DSCR con semáforo.</h3><p>Compara lo que te pagan contra la tarifa que necesitas y mide la cobertura de la deuda año por año contra el covenant del banco.</p>
             <ul><li>Resultado mensual y anual, con impuestos y PTU</li><li>Semáforo contra el mínimo y el objetivo del covenant</li><li>Puente entre escenarios para explicar cada diferencia</li></ul></div>
-          <div class="marco"><img src="img/resultados.jpg" alt="Tarifa requerida y DSCR por escenario" loading="lazy"></div>
+          <div class="marco ampliable"><button type="button" class="ampliar" data-grande="img/resultados-grande.jpg" aria-label="Ver en grande"><img src="img/resultados.jpg" alt="Tarifa requerida y DSCR por escenario" loading="lazy"><span class="lupa">Ver en grande</span></button></div>
         </div>
         <div class="funcion aparece">
-          <div class="texto"><div class="n">03 · EVALUACIÓN</div><h3>¿Conviene entrar? <span class="oro">Te lo dice claro.</span></h3><p>VPN, TIR, WACC y recuperación del capital, con un veredicto por escenario y recomendaciones concretas.</p>
+          <div class="texto"><div class="n">03 · EVALUACIÓN</div><h3>¿Conviene entrar? <span class="oro">Te lo dice claro.</span></h3><p>VPN, TIR, WACC (costo del capital) y recuperación del capital, con un veredicto por escenario y recomendaciones concretas.</p>
             <ul><li>Flujo del accionista y del proyecto</li><li>Punto de equilibrio en km y holgura</li><li>Recomendaciones con cifras, no con adjetivos</li></ul></div>
-          <div class="marco"><img src="img/evaluacion.jpg" alt="Evaluación de la inversión con veredicto" loading="lazy"></div>
+          <div class="marco ampliable"><button type="button" class="ampliar" data-grande="img/evaluacion-grande.jpg" aria-label="Ver en grande"><img src="img/evaluacion.jpg" alt="Evaluación de la inversión con veredicto" loading="lazy"><span class="lupa">Ver en grande</span></button></div>
         </div>
         <div class="funcion aparece">
           <div class="texto"><div class="n">04 · SENSIBILIDAD Y ESTRÉS</div><h3>Estrésalo antes que el banco.</h3><p>Qué supuesto mueve más tu resultado y con qué cambio se rompe el covenant, en segundos.</p>
             <ul><li>Tornado de sensibilidad por supuesto</li><li>Punto de quiebre del covenant</li><li>Estrés combinado tipo comité de crédito</li></ul></div>
-          <div class="marco"><img src="img/sensibilidad.jpg" alt="Sensibilidad y estrés" loading="lazy"></div>
+          <div class="marco ampliable"><button type="button" class="ampliar" data-grande="img/sensibilidad-grande.jpg" aria-label="Ver en grande"><img src="img/sensibilidad.jpg" alt="Sensibilidad y estrés" loading="lazy"><span class="lupa">Ver en grande</span></button></div>
         </div>
         <div class="funcion aparece">
           <div class="texto"><div class="n">05 · LISTO PARA EL COMITÉ</div><h3>Una presentación ejecutiva, en un clic.</h3><p>El informe completo para el comité de crédito o de inversión: conclusión, escenarios, costo por km, proyección y finanzas, listo para imprimir.</p>
             <ul><li>Paquete para comité en PDF</li><li>Gráficas de la proyección por escenario</li><li>Exportación a Excel para auditoría</li></ul></div>
-          <div class="marco"><img src="img/presentacion.jpg" alt="Presentación ejecutiva para el comité" loading="lazy"></div>
+          <div class="marco ampliable"><button type="button" class="ampliar" data-grande="img/presentacion-grande.jpg" aria-label="Ver en grande"><img src="img/presentacion.jpg" alt="Presentación ejecutiva para el comité" loading="lazy"><span class="lupa">Ver en grande</span></button></div>
         </div>
       </div>
       <p class="nota-demo" style="margin-top:30px">Todas las pantallas muestran un modelo de demostración con cifras ficticias.</p>
@@ -357,7 +368,7 @@ footer .cont { display: flex; flex-wrap: wrap; justify-content: space-between; g
       <h2 class="aparece">Hecho para quien firma la decisión.</h2>
       <div class="quien aparece">
         <div><h3>Dueños y directores generales</h3><p>Saber si una concesión conviene, con qué tarifa y bajo qué condiciones, antes de comprometerse.</p></div>
-        <div><h3>Directores de finanzas</h3><p>Un modelo auditable, con una sola fuente por cifra, que responde al banco en minutos y no en días.</p></div>
+        <div><h3>Directores de finanzas</h3><p>Un modelo auditable: cada cifra se rastrea hasta su supuesto y responde al banco en minutos, no en días.</p></div>
         <div><h3>Comités de crédito e inversión</h3><p>Escenarios comparables, cobertura de la deuda y estrés, presentados con claridad ejecutiva.</p></div>
       </div>
       <div class="medida aparece">
@@ -375,7 +386,7 @@ footer .cont { display: flex; flex-wrap: wrap; justify-content: space-between; g
       <div class="cifras aparece">
         <div><b class="oro">13+ años</b><span>en finanzas corporativas, contraloría y auditoría</span></div>
         <div><b class="oro">Auditoría</b><span>formación en firmas internacionales</span></div>
-        <div><b class="oro">Consejo</b><span>y comités: información para decidir</span></div>
+        <div><b class="oro">Consejo y comités</b><span>experiencia presentando para decidir</span></div>
         <div><b class="oro">Concesiones</b><span>especialización en su valuación</span></div>
       </div>
     </div>
@@ -411,6 +422,8 @@ footer .cont { display: flex; flex-wrap: wrap; justify-content: space-between; g
     </div>
   </section>
 </main>
+
+<div class="visor" id="visor" hidden role="dialog" aria-modal="true" aria-label="Captura en grande"><img alt=""><button type="button" class="cerrar" aria-label="Cerrar">×</button></div>
 
 <a class="subir" href="#inicio" aria-label="Subir al inicio" title="Subir al inicio"><svg viewBox="0 0 24 24"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"/></svg></a>
 
@@ -566,6 +579,18 @@ footer .cont { display: flex; flex-wrap: wrap; justify-content: space-between; g
     var io = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { io.disconnect(); animar = true; pintar(); } }, { threshold: .3 });
     io.observe(lienzo);
   }
+})();
+</script>
+<script>
+// Capturas: se abren en grande y se cierran con clic, la × o Escape.
+(function () {
+  var v = document.getElementById("visor"), img = v.querySelector("img"), ultimo = null;
+  function cerrar() { v.hidden = true; img.removeAttribute("src"); document.body.style.overflow = ""; if (ultimo) ultimo.focus(); }
+  document.querySelectorAll(".ampliar").forEach(function (b) {
+    b.addEventListener("click", function () { ultimo = b; img.src = b.dataset.grande; img.alt = b.querySelector("img").alt; v.hidden = false; document.body.style.overflow = "hidden"; v.querySelector(".cerrar").focus(); });
+  });
+  v.addEventListener("click", cerrar);
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !v.hidden) cerrar(); });
 })();
 </script>
 <script>
